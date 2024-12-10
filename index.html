@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/x-icon" href="favicon.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>akjdv token</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #000;
+            color: white;
+            overflow: hidden;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(0, 0, 0, 0.8);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        header h1 {
+            font-size: 3em;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        header p {
+            font-size: 1.2em;
+            color: #bbb;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .button {
+            display: inline-block;
+            padding: 12px 25px;
+            margin-top: 20px;
+            font-size: 1em;
+            color: white;
+            text-decoration: none;
+            background: linear-gradient(45deg, #ff416c, #ff4b2b);
+            border-radius: 25px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 65, 108, 0.5);
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const canvas = document.createElement('canvas');
+            document.body.appendChild(canvas);
+            const ctx = canvas.getContext('2d');
+
+            const resizeCanvas = () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            };
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+
+            const particles = Array.from({ length: 150 }, () => ({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                r: Math.random() * 2 + 1,
+                dx: (Math.random() - 0.5) * 2,
+                dy: (Math.random() - 0.5) * 2
+            }));
+
+            const cursor = { x: 0, y: 0 };
+
+            window.addEventListener('mousemove', (e) => {
+                cursor.x = e.clientX;
+                cursor.y = e.clientY;
+            });
+
+            const drawParticles = () => {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach(p => {
+                    const dx = cursor.x - p.x;
+                    const dy = cursor.y - p.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    const maxDistance = 100;
+                    const force = Math.max(0, (maxDistance - distance) / maxDistance);
+
+                    p.x -= dx * force * 0.05;
+                    p.y -= dy * force * 0.05;
+
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+                    ctx.fill();
+
+                    p.x += p.dx;
+                    p.y += p.dy;
+
+                    if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
+                    if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+                });
+                requestAnimationFrame(drawParticles);
+            };
+            drawParticles();
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <h1>akjdv</h1>
+        <p>Empowering Decentralized Finance</p>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <h2>About akjdv</h2>
+            <p>akjdv is a revolutionary cryptocurrency empowering the community to redefine the future of finance. No central control, just pure decentralized innovation.</p>
+        </div>
+
+        <div class="card">
+            <h2>Where to Buy/Sell</h2>
+            <p>You can buy and sell akjdv securely on <strong>Pump.fun</strong>. Click the button below to get started!</p>
+            <a class="button" href="#">Buy/Sell on Pump.fun</a>
+        </div>
+
+        <div class="card">
+            <h2>Follow Us</h2>
+            <p>Stay updated on all things akjdv. Join our growing community on Twitter for the latest news and updates.</p>
+            <a class="button" href="https://x.com/akjdvtoken" target="_blank">Follow us on Twitter</a>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Akjdv. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>
